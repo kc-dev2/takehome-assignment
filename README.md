@@ -24,7 +24,7 @@ Example:
  - Most of my followers are located in Tokyo, which is +13 hours ahead of me (11 PM)
  - My second most followed location is Zurich, which is +6 hours ahead of me (4 PM)
  - I average those 2 times to get a new 'timezone'. In this case, the average is (13+6)/2 = +7.5 hours, which is 5:30 PM EST. Since this new time is between 8 AM - 8 PM, posting right now would be considered optimal.
- - A not optimal posting time would be 3 PM EST, which translates to 4 AM Tokyo time and 9 PM Zurich time. Then, the averaged time would be 10:30 PM, which is outside of the range where I consider users to be most active.
+ - A not optimal posting time would be 3 PM EST, which translates to 4 AM Tokyo time and 9 PM Zurich time. Then, the averaged time would be 10:30 PM, which is outside of the range where I consider users to be most active. In this case, I will add +12 hours to the current time and post then. Here, the new post/optimal time will be the next day 3 AM EST. 
 
 ## Code
 Since I took a long time trying to figure out the solution, I didn't have time to implement as much as I would've liked. 
