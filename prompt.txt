@@ -1,0 +1,35 @@
+Contenda strives to increase the top of funnel engagement for technical content. We know people work really hard to make high quality content, but sometimes it gets lost in the noise, or just due to time of posting. Let's say I made a Getting Started guide and posted it during my work day (2PM EST). That's 8PM in London, midnight in Dubai, and 5AM in Tokyo. A lot of people are going to miss my content because of time. The goal of this feature is to find optimal times to post content so that all of my Twitter followers can have equal visibility, no matter where in the world they are located.
+
+As a user, I'm really concerned about annoying my followers. I definitely don't want something to post so often that it feels robotic. Keep that in mind when you're designing a solution. Remember, not all problems are solved through code. If you have a solution through UX, product, or even just good copy, tell us in the README.
+
+At your disposal is a large json dump of Twitter follower data from this endpoint:
+
+https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-followers
+
+We cleaned some of the data, so the format is {"{user_id}":[{user.data},"{user.data.location}" . Here is an example: {"1500017105407602688":[<User id=1500017105407602688 name=Papon Barmon username=barmon_papon1>, 'Dhaka, Bangladesh']}
+
+Input
+A single date time object that has the day and the time.
+
+datetime.now()
+
+Output
+Array of datetime objects that have the day and the time.
+
+[datetime.datetime]
+
+
+---------------
+
+1. Maybe repost content only if it gets enough clicks and have some prompt like "hey in case you missed it...". Probably makes more sense to repost popular content as reposting unpopular ones will probably annoy followers
+^ cool feature but will probably need some more time to implement
+2. OK so I'm a Twitter user and I have data on my followers. The only data I have after cleaning is name/username and location. So I will need to optimize posting times mainly (exclusively?) on location 
+3. Will probably need some way to translate location into time zone
+4. Input is datetime object - it's when I 'post' my content. Output is array of datetime objects, when content actually gets posted. Since output is array content can be posted more than once a day. I think posting something twice is deal. Followers may start to get annoyed after 3 times.
+5. The biggest question is: how can I find the best time to post content?
+	- If I have 2 followers, one in Philly and one in Dhaka, the best time would be some time where both are awake, no?
+	- 
+
+
+I don't think data is in format as explained in README. Looks to be {"{user_id}":["<{user.data},{user.data.location}"]} (data is within 1 string and not 1 array w/ 2 values, has open bracket but does not close)
+
