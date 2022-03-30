@@ -4,7 +4,7 @@ Task: Find optimal times to post content to reach as many of my followers as pos
 ## Steps:
 The first thing I did was to spend 15-20 minutes to understand the prompt and jot down any initial thoughts. This includes what modules I might use, what it means to be 'optimal', steps to take, etc. I also looked through the JSON data to get a better understanding of how it's formatted so it would be easier to figure out how to extract the data that I want/need
 
-[note: I don't believe the JSON is formatted 100% correctly as explained in README. For example, it looks to be formatted as {"{user_id}":["<{user.data},{user.data.location}"]}. Notice that the data is all under the same string and not 1 array w/ 2 values. It also has open bracket (<) but not a closed one (>). This made it a little difficult when parsing the data in my code.]
+*note: I don't believe the JSON is formatted 100% correctly as explained in README. For example, it looks to be formatted as {"{user_id}":["<{user.data},{user.data.location}"]}. Notice that the data is all under the same string and not 1 array w/ 2 values. It also has open bracket (<) but not a closed one (>). This made it a little difficult when parsing the data in my code.*
 
 Afterwards, I spent another 15-20 minutes trying to come up with a solution to the prompt. Throughout the coding process, I also continued to ask myself if the solution I came up with is actually addressing the prompt.
 
