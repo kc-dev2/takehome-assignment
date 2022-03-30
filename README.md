@@ -1,62 +1,41 @@
 # Contenda Takehome
-Hello! 👋 Thank you for checking out this repository. To make sure you're in the right place, this is the repo for the following jobs:
+Task: Find optimal times to post content to reach as many of my followers as possible
 
-> [Senior Engineer](https://careers.contenda.co/senior)
+## Steps:
+The first thing I did was to spend 15-20 minutes to understand the prompt and jot down any initial thoughts. This includes what modules I might use, what it means to be 'optimal', steps to take, etc. I also looked through the JSON data to get a better understanding of how it's formatted so it would be easier to figure out how to extract the data that I want/need
 
-> [Fullstack Engineer](https://careers.contenda.co/fullstack)
+[note: I don't believe the JSON is formatted 100% correctly as explained in README. For example, it looks to be formatted as {"{user_id}":["<{user.data},{user.data.location}"]}. Notice that the data is all under the same string and not 1 array w/ 2 values. It also has open bracket (<) but not a closed one (>). This made it a little difficult when parsing the data in my code.]
 
-The goal of this assignment is twofold. One, we want to make sure you'd actually be happy doing the type of work we do on a daily basis. This assignment mocks a real feature that we already have in production. Two, we want to see how you think about real world problems, not leetcode brain teasers. It's especially helpful if you can walk us through your thinking via writing. 
+Afterwards, I spent another 15-20 minutes trying to come up with a solution to the prompt. Throughout the coding process, I also continued to ask myself if the solution I came up with is actually addressing the prompt.
 
-**Please don't spend more than 3 hours on this assignment.** We're really excited to see what you can do, but we also want to respect your time 😄
+I spent around 2 hours writing the code, with little breaks here and there to make sure that I was actually solving the problem that was being asked.
 
-If you have any questions, please email lilly@contenda.co.
-
-## Task
-Contenda strives to increase the top of funnel engagement for technical content. We know people work really hard to make high quality content, but sometimes it gets lost in the noise, or just due to time of posting. Let's say I made a Getting Started guide and posted it during my work day (2PM EST). That's 8PM in London, midnight in Dubai, and 5AM in Tokyo. A lot of people are going to miss my content because of *time*. **The goal of this feature is to find optimal times to post content so that all of my Twitter followers can have equal visibility, no matter where in the world they are located**. 
-
-As a user, I'm really concerned about annoying my followers. I definitely don't want something to post so often that it feels robotic. Keep that in mind when you're designing a solution. Remember, not all problems are solved through code. If you have a solution through UX, product, or even just good copy, tell us in the README. 
-
-At your disposal is a large `json` dump of Twitter follower data from this endpoint:
-
-https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-followers
-
-We cleaned some of the data, so the format is `{"{user_id}":[{user.data},"{user.data.location}"` . Here is an example: `{"1500017105407602688":[<User id=1500017105407602688 name=Papon Barmon username=barmon_papon1>, 'Dhaka, Bangladesh']}`
-
-#### Input
-A single date time object that has the day and the time.
-
-`datetime.now()`
-
-#### Output
-Array of datetime objects that have the day and the time.
-
-`[datetime.datetime]`
+So realistic breakdown of time spent is probably 10% understanding problem, 40% (trying to) think of solution, 50% writing code
 
 ## Setup
-For your convenience, I put a Dockerfile and helloworld Python file into this repo. Do the following to get started:
+The only additional setup that is necessary is to install the pytz and tzlocal libraries, which I used in my location-timezone conversions. The **requirements.txt** file has the libraries that I installed during the coding process, but I ended up only using pytz and tzlocal.
 
-1. Install Docker. We're going to be using the official python3 image from the Docker repo. 
-2. Clone this repo and `cd` into it
-3. `docker build -t main .`
-4. `docker run main`
+## Solution
+I wasn't able to implement a working solution in the allotted time, mainly because I was unsure of what it meant for a posting time to be 'optimal'. The one that I thought to go for was to return a list of datetime objects in order of 'optimization'. To me, optimization meant reaching the most followers. So the most optimal time is the one where I catered to the location(s) where most of my followers are located. For example, if most of my users are in the EST timezone, then I would post when those users are most active, sometime between 8 AM - 8 PM of that timezone. 
 
-It should print "Hello World!". 
+To make the outreach a little more optimal, the solution would 'average' the top 2 locations and then post at a time that average is sometime between 8 AM - 8 PM for that new 'timezone'. 
+Example:
+ - My current timezone is EST and I post at 10 AM. 
+ - Most of my followers are located in Tokyo, which is +13 hours ahead of me (11 PM)
+ - My second most followed location is Zurich, which is +6 hours ahead of me (4 PM)
+ - I average those 2 times to get a new 'timezone'. In this case, the average is (13+6)/2 = +7.5 hours, which is 5:30 PM EST. Since this new time is between 8 AM - 8 PM, posting right now would be considered optimal.
+ - A not optimal posting time would be 3 PM EST, which translates to 4 AM Tokyo time and 9 PM Zurich time. Then, the averaged time would be 10:30 PM, which is outside of the range where I consider users to be most active.
 
-## Evaluation
-Submit a Github repo (fork this one) via email to lilly@contenda.co. Please include a README that has the following:
+## Code
+Since I took a long time trying to figure out the solution, I didn't have time to implement as much as I would've liked. 
 
-1. Any additional setup required outside of the ones I wrote so that I can run your app
-2. What your code does and why
-4. Stuff you'd like to get to but didn't have the time
-5. A rough estimate of how you spent your time
+Since my solution revolves around finding the timezones that my followers are located in, I needed a way to translate the inputted user location into the timezones. That means first that I needed to extract the locations from the user data. That is the purpose of the **get_locations** function. It takes in the user data (which is manually loaded from the provided JSON file for this assignment), parses the location using **"".join(loc[0].split(", ")[1:])**, and then uses list comprehension + filtering to return a list of locations that are not None, since I can't get any timezones for a None value.
 
-When I read your code, I'll be asking myself the following:
+The **tz_to_time** is pretty simple. All it does is input a current datetime.datetime object along with a specified timezone and outputs the datetime.datetime object adjusted for the specified timezone.
 
-- Does this solve the business problem?
-- Is this code efficient?
-- Is this code understandable? 
-- Did you use your time well?
+## Incomplete Stuff
+The biggest time waster for me on this assignment was trying to figure out how to implement **loc_to_timezone**, which would convert the user inputted locations into timezones that could be inputted into the **tz_to_time** function. I only way I could of think to implement this was to utilize an API where I can search for a location, receive (longitude, latitude) coordinates as an output, and then use those again as an input somewhere else to convert them into timezones. I think I wasted a lot of time trying to look for libraries that could help me, but I felt restricted because I didn't want to pay for any APIs. 
 
-If it makes sense, we'll organize a video call for our engineering team to ask you a few questions live and walk through the code together. 
+Since I couldn't find a way to bridge the gap between location -> timezone, I ended up with not enough time to implement an 'averaging' timezones function that the last paragraph in the Solutions section details.
 
-Can't wait to see what you come up with! As always, if you have any feedback on this particular assignment, please let me know. 
+One other feature that I thought would be cool was to redefine 'optimal' so that instead of posting content when most of my followers are awake, I post when my most active users are awake. For example, if most of my followers are in Tokyo, but my posts get the most interactions from users in Zurich, then maybe it makes more sense to post content to cater towards the Zurich followers instead of the Tokyo ones. This would take too much time though so I did not consider to try to implement it for the assignment.
