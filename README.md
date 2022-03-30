@@ -15,6 +15,13 @@ So realistic breakdown of time spent is probably 10% understanding problem, 40% 
 ## Setup
 The only additional setup that is necessary is to install the pytz and tzlocal libraries, which I used in my location-timezone conversions. The **requirements.txt** file has the libraries that I installed during the coding process, but I ended up only using pytz and tzlocal.
 
+## Run
+To run the solution, ensure that necessary libaries are installed and simply run 
+```
+    python solution.py
+```
+from the **takehome-assignment** folder
+
 ## Solution
 I wasn't able to implement a working solution in the allotted time, mainly because I was unsure of what it meant for a posting time to be 'optimal'. The one that I thought to go for was to return a list of datetime objects in order of 'optimization'. To me, optimization meant reaching the most followers. So the most optimal time is the one where I catered to the location(s) where most of my followers are located. For example, if most of my users are in the EST timezone, then I would post when those users are most active, sometime between 8 AM - 8 PM of that timezone. 
 
