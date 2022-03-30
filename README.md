@@ -18,7 +18,7 @@ The only additional setup that is necessary is to install the pytz and tzlocal l
 ## Run
 To run the solution, ensure that necessary libaries are installed and simply run 
 ```
-    python solution.py
+python solution.py
 ```
 from the **takehome-assignment** folder
 
